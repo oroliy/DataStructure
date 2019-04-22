@@ -22,10 +22,10 @@ typedef struct c_node //双向节点
 } c_node; //双向节点结构体
 typedef struct
 {
-    c_node head; //头节点
-    c_node tail; //尾节点
-    c_node *p_cur;//记录遍历过程中上一个操作的节点
-} c_link; //双向链表结构体
+    c_node head;   //头节点
+    c_node tail;   //尾节点
+    c_node *p_cur; //记录遍历过程中上一个操作的节点
+} c_link;          //双向链表结构体
 
 /***************************************单向链表声明*********************************/
 
@@ -363,7 +363,7 @@ void c_link_init(c_link *p_link)
     p_link->head.p_next = &(p_link->tail);
     p_link->tail.p_prev = &(p_link->head);
     p_link->tail.p_next = NULL;
-    p_link->p_cur = NULL;//空指针表示链表不在遍历过程中
+    p_link->p_cur = NULL; //空指针表示链表不在遍历过程中
 }
 //链表清理函数
 void c_link_deinit(c_link *p_link)
@@ -654,16 +654,19 @@ int c_link_next(c_link *p_link, int *p_val)
 {
     if (!(p_link->p_cur))
     {
+        //链表没有处于遍历过程中
         return 0;
     }
     p_link->p_cur = p_link->p_cur->p_next;
     if (p_link->p_cur == &(p_link->tail))
     {
+        //指针指向尾节点时，表示遍历完成，初始化
         p_link->p_cur = NULL;
         return 0;
     }
     else
     {
+        //把当前节点里的数字传递给调用函数
         *p_val = p_link->p_cur->val;
         return 1;
     }

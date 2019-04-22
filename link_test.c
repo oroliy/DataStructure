@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "link.h"
-int main()
+void main()
 {
-    int val=0,size=0;
+    int val = 0, size = 0;
     link test = {0};
     link_init(&test);
     link_add_head(&test, 20);
@@ -14,7 +14,7 @@ int main()
     link_remove(&test, 30);
 
     size = link_size(&test);
-    for(int i = 0; i < size; i++)
+    for (int i = 0; i < size; i++)
     {
         link_get(&test, &val, i);
         printf("%d ", val);
@@ -25,5 +25,27 @@ int main()
     link_get_tail(&test, &val);
     printf("最后一个数字是%d\n", val);
     link_deinit(&test);
-    
+
+    int c_val = 0, ret = 0;
+    c_link c_test = {0};
+    c_link_init(&c_test);
+    c_link_add_head(&c_test, 20);
+    c_link_add_head(&c_test, 10);
+    c_link_append(&c_test, 90);
+    c_link_append(&c_test, 100);
+    c_link_insert(&c_test, 30);
+    c_link_insert(&c_test, 80);
+    c_link_remove(&c_test, 30);
+    c_link_begin(&c_test);
+    while (1)
+    {
+        ret = c_link_next(&c_test, &c_val);
+        if (!ret)
+        {
+            break;
+        }
+        printf("%d ", c_val);
+    }
+    printf("\n");
+    c_link_deinit(&c_test);
 }
