@@ -112,6 +112,12 @@ void c_link_begin(c_link *);
 //在从前向后遍历过程中获得下一个数字的函数
 int c_link_next(c_link *, int *);
 
+//开始从后向前遍历链表
+void c_link_r_begin(c_link *);
+
+//从后向前遍历获得数字的函数
+int c_link_prev(c_link *, int *);
+
 /***************************************单向链表*********************************/
 
 //链表初始化
@@ -671,5 +677,26 @@ int c_link_next(c_link *p_link, int *p_val)
         return 1;
     }
 }
-
+//开始从后向前遍历链表
+void c_link_r_begin(c_link *p_link)
+{
+    p_link->p_cur = &(p_link->tail);
+}
+//从后向前遍历获得数字的函数
+int c_link_prev(c_link *p_link,int *p_val)
+{
+    if (!p_link->p_cur) {
+        return 0;
+    }
+    p_link->p_cur = p_link->p_cur->p_prev;
+    if (p_link->p_cur==&(p_link->head)) {
+        p_link->p_cur = NULL;
+        return 0;
+    }
+    else
+    {
+        *p_val = p_link->p_cur->val;
+        return 1;
+    }
+}
 #endif
