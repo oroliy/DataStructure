@@ -25,4 +25,5 @@ int main()
     link_get_tail(&test, &val);
     printf("最后一个数字是%d\n", val);
     link_deinit(&test);
+    
 }
