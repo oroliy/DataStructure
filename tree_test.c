@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include "tree.h"
-
-int tree_height(tree *, int *,int *);
 void print_tree(int);
+static int sum = 0;
 void main()
 {
     tree test = {0};
@@ -18,29 +17,17 @@ void main()
 
     tree_fiter(&test, print_tree);
     printf("\n");
-    tree_miter(&test, print_tree);
+    /*  tree_miter(&test, print_tree);
     printf("\n");
     tree_liter(&test, print_tree);
-    printf("\n");
+    printf("\n"); */
 
-    int val1 = 0, val2 = 0, a = 0;
-    a = tree_height(&test, &val1,&val2);
-    printf("%d %d\n", val1,val2);
+    int val = 0;
+    printf("%d %d\n", tree_max_height(&test), sum);
     tree_deinit(&test);
 }
-void print_tree(int val1)
+void print_tree(int val)
 {
-    printf("%d ", val1);
-}
-int tree_height(tree *p_tree, int *p_val,int *p_val2)
-{
-    if (!p_tree->p_node)
-    {
-        return 0;
-    }
-    (*p_val)++;
-    tree_height(&p_tree->p_node->left, p_val,p_val2);
-    tree_height(&p_tree->p_node->right, p_val,p_val2);
-    (*p_val2)++;
-    return 0;
+    sum += val;
+    printf("%d ", val);
 }

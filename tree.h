@@ -13,7 +13,7 @@ typedef struct node
     tree left;
     tree right;
 } node;
-typedef void (*p_func_t)(int);//创建函数指针类型
+typedef void (*p_func_t)(int); //创建函数指针类型
 /*************************************************/
 //树的初始化函数
 void tree_init(tree *);
@@ -21,8 +21,8 @@ void tree_init(tree *);
 //树的清理函数
 void tree_deinit(tree *);
 
-//在有序二叉树里查找某个数字所在位置,返回值为指向该数字的指针
-tree *tree_search(const tree *, int); 
+//在有序二叉树里查找某个数字所在节点,返回值为指向该节点的指针
+tree *tree_search(const tree *, int);
 
 //在有序二叉树里插入数字
 int tree_insert(tree *, int);
@@ -35,6 +35,10 @@ void tree_miter(const tree *, p_func_t);
 
 //以后序遍历方式处理有序二叉树里所有节点
 void tree_liter(const tree *, p_func_t);
+
+//计算树的最大深度（高度），返回值为高度整数
+int tree_max_height(const tree *);
+
 /*************************************************/
 
 //树的初始化函数
@@ -106,9 +110,9 @@ void tree_miter(const tree *p_tree, p_func_t p_func)
     {
         return;
     }
-    tree_miter(&(p_tree->p_node->left), p_func);//中序遍历左子树
+    tree_miter(&(p_tree->p_node->left), p_func); //中序遍历左子树
     p_func(p_tree->p_node->val);
-    tree_miter(&(p_tree->p_node->right), p_func);//中序遍历右子树
+    tree_miter(&(p_tree->p_node->right), p_func); //中序遍历右子树
 }
 //以前序遍历方式处理有序二叉树里所有节点
 void tree_fiter(const tree *p_tree, p_func_t p_func)
@@ -117,9 +121,9 @@ void tree_fiter(const tree *p_tree, p_func_t p_func)
     {
         return;
     }
-    p_func(p_tree->p_node->val);//先处理根节点
-    tree_miter(&(p_tree->p_node->left), p_func);//前序遍历左子树
-    tree_miter(&(p_tree->p_node->right), p_func);//前序遍历右子树
+    p_func(p_tree->p_node->val);                  //先处理根节点
+    tree_miter(&(p_tree->p_node->left), p_func);  //前序遍历左子树
+    tree_miter(&(p_tree->p_node->right), p_func); //前序遍历右子树
 }
 //以后序遍历方式处理有序二叉树里所有节点
 void tree_liter(const tree *p_tree, p_func_t p_func)
@@ -128,10 +132,21 @@ void tree_liter(const tree *p_tree, p_func_t p_func)
     {
         return;
     }
-    tree_miter(&(p_tree->p_node->left), p_func);//后序遍历左子树
-    tree_miter(&(p_tree->p_node->right), p_func);//后序遍历右子树
-    p_func(p_tree->p_node->val);//最后处理根节点
+    tree_miter(&(p_tree->p_node->left), p_func);  //后序遍历左子树
+    tree_miter(&(p_tree->p_node->right), p_func); //后序遍历右子树
+    p_func(p_tree->p_node->val);                  //最后处理根节点
 }
-
+//计算树的最大深度（高度），返回值为高度整数
+int tree_max_height(const tree *p_tree)
+{
+    int left_height = 0, right_height = 0;
+    if (!p_tree->p_node)
+    {
+        return 0;
+    }
+    left_height = tree_max_height(&p_tree->p_node->left);//递归调用计算左子树高度
+    right_height = tree_max_height(&p_tree->p_node->right);//递归调用计算右子树高度
+    return (left_height > right_height ? left_height : right_height) + 1;//比较两个高度返回大的并加一就是树的高度
+}
 
 #endif
